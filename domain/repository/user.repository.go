@@ -12,17 +12,17 @@ type UserRepository interface {
 	Create(value request.RequestRegisterDTO) error
 }
 
-type databaseRepository struct {
+type userRepository struct {
 	database *gorm.DB
 }
 
-func NewUserRepository(database *gorm.DB) databaseRepository {
-	return databaseRepository{
+func NewUserRepository(database *gorm.DB) *userRepository {
+	return &userRepository{
 		database: database,
 	}
 }
 
-func (input databaseRepository) Create(value request.RequestRegisterDTO) error {
+func (input userRepository) Create(value request.RequestRegisterDTO) error {
 	result := input.database.Create(value)
 
 	if result.Error != nil {

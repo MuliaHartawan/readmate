@@ -1,14 +1,21 @@
 package main
 
 import (
-    "github.com/gofiber/fiber/v2"
+	"fmt"
+	"os"
+	"readmate/delivery/http"
+	"readmate/domain"
+
+	"gorm.io/gorm"
 )
 
-func main() {
-    app := fiber.New()
-
-    // Routing dan middleware dapat ditambahkan di sini
-
-    app.Listen(":3000")
+type Repository struct {
+	DB *gorm.DB
 }
 
+func main() {
+	domain := domain.DomainInit()
+	app := http.NewHttpDelivery(domain)
+
+	app.Listen(fmt.Sprintf(":%s", os.Getenv("PORT_APP")))
+}
